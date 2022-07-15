@@ -9,6 +9,7 @@ const oceanButton = document.querySelector(".ocean");
 const hogwartsButton = document.querySelector(".hogwarts");
 const bowieButton = document.querySelector(".bowie");
 const peachesButton = document.querySelector(".peaches");
+const colorButtons = document.querySelectorAll(".colors");
 
 
 const rainbowColors = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
@@ -111,6 +112,17 @@ oceanButton.addEventListener("click", () => colorScheme = oceanColors);
 hogwartsButton.addEventListener("click", () => colorScheme = hogwartsColors);
 bowieButton.addEventListener("click", () => colorScheme = bowieColors);
 peachesButton.addEventListener("click", () => colorScheme = peachColors);
+
+rainbowButton.classList.add("selected"); // Set default color scheme
+
+colorButtons.forEach(button => {
+    button.onclick = () => {
+        colorButtons.forEach(button => {
+            button.classList.remove("selected");
+        });
+        button.classList.add("selected");
+    }
+});
 
 
 

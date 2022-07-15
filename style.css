@@ -19,7 +19,7 @@ main {
     flex-direction: column;
     gap: 2rem;
     width: 17vw;
-    background-color: #e5cbbf;
+    background-color: #45d1d9;
 }
 
 .sidebar h1 {
@@ -40,6 +40,10 @@ main {
 
 button {
     font-family: 'Open Sans', sans-serif;
+}
+
+.selected {
+    background-color: blue;
 }
 
 .background-container {
