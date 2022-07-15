@@ -4,21 +4,33 @@ const fillButton = document.querySelector(".fill");
 const resetButton = document.querySelector(".reset");
 const clearButton = document.querySelector(".clear");
 
+const rainbowButton = document.querySelector(".rainbow");
+const oceanButton = document.querySelector(".ocean");
+const hogwartsButton = document.querySelector(".hogwarts");
+const bowieButton = document.querySelector(".bowie");
+const peachesButton = document.querySelector(".peaches");
+
+
 const rainbowColors = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
-"#8ed1b5", "#55cbcb", "#44b0c6", "757acd", "e272d5"];
+        "#8ed1b5", "#55cbcb", "#44b0c6", "757acd", "e272d5"];
+const oceanColors = ["#093862", "#0960a3", "#54a7d9", "#a9dafb", "#7bafba", "#3f999a", "#1e7c96"];
+const peachColors = ["#f8bb51", "#f99827", "#f3d5af", "#f6bf87", "#f0631e", "#f7865e"];
+const bowieColors = ["#f2ddd8", "#e83d05", "#b90005", "#39b2ba", "#030639"];
+const hogwartsColors = ["#ae0001", "#2a623d", "#222f5b", "#f0c75e"];
 const positions = ["scale(2) translateX(-20px)", "scale(2) translateX(20px)", 
         "scale(2) translateY(-20px)", "scale(2) translateY(20px)"];
 const images = ["giraffe", "loch-ness-monster", "torii", "poseidon", "gandalf", "dragon-fruit"];
 
+let colorScheme = rainbowColors;
+
 
 fillBoard();
-
 
 function fillBoard() {
     for (let i = 0; i < 150; i++) {
         const balloon = document.createElement("div");
         balloon.classList.add("balloon");
-        getColor(rainbowColors, balloon);
+        getColor(colorScheme, balloon);
         getPosition(balloon);
         background.appendChild(balloon);
     }
@@ -45,7 +57,7 @@ fillButton.onclick = () => {
             balloon.addEventListener("mouseover", () => {
                 balloon.style.transform = "scale(2)";
                 getPosition(balloon);
-                getColor(rainbowColors, balloon);
+                getColor(colorScheme, balloon);
             })
         });
     } else {
@@ -54,7 +66,7 @@ fillButton.onclick = () => {
             balloon.classList.add("balloon");
             balloon.style.backgroundColor = "transparent";
             balloon.addEventListener("mouseover", () => {
-                getColor(rainbowColors, balloon);
+                getColor(colorScheme, balloon);
             });
             getPosition(balloon);
             background.appendChild(balloon);
@@ -72,7 +84,7 @@ clearButton.onclick = () => {
 }
 
 function getColor(colors, balloon) {
-    let randomColor = Math.floor(Math.random() * (colors.length - 1));
+    let randomColor = Math.floor(Math.random() * (colors.length));
     balloon.style.backgroundColor = colors[randomColor];
 }
 
@@ -93,4 +105,13 @@ function clearBoard() {
         balloon.remove();
     });
 }
+
+rainbowButton.addEventListener("click", () => colorScheme = rainbowColors);
+oceanButton.addEventListener("click", () => colorScheme = oceanColors);
+hogwartsButton.addEventListener("click", () => colorScheme = hogwartsColors);
+bowieButton.addEventListener("click", () => colorScheme = bowieColors);
+peachesButton.addEventListener("click", () => colorScheme = peachColors);
+
+
+
 

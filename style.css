@@ -1,9 +1,51 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:wght@400;700&display=swap');
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #fbf7f5;
+    font-family: 'Open Sans', sans-serif;
+}
+
+main {
+    display: flex;
+    flex-grow: 1;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 17vw;
+    background-color: #e5cbbf;
+}
+
+.sidebar h1 {
+    font-family: 'Chewy', cursive;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.button-container {
     display: grid;
     place-items: center;
-    min-height: 100vh;
+    padding: 1rem;
+}
+
+button {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.background-container {
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
 }
 
 .background {
