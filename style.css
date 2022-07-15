@@ -15,5 +15,5 @@ body {
 }
 
 .square {
-    background-color: rgb(173, 173, 173);
+    border-radius: 50%;
 }

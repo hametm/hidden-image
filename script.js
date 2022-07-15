@@ -1,15 +1,32 @@
 const background = document.querySelector(".background");
-const showButton = document.querySelector(".show");
-const hideButton = document.querySelector(".hide");
+const eraseButton = document.querySelector(".erase");
+const fillButton = document.querySelector(".fill");
+const resetButton = document.querySelector(".reset");
+const clearButton = document.querySelector(".clear");
+const cursorButton = document.querySelector(".cursor");
 
-for (let i = 0; i < 150; i++) {
-    const square = document.createElement("div");
-    square.classList.add("square");
-    background.appendChild(square);
+const rainbowColors = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
+"#8ed1b5", "#55cbcb", "#44b0c6", "757acd", "e272d5"];
+const positions = ["scale(2) translateX(-20px)", "scale(2) translateX(20px)", 
+        "scale(2) translateY(-20px)", "scale(2) translateY(20px)"];
+
+
+fillBoard();
+
+const squares = document.querySelectorAll(".square");
+
+
+function fillBoard() {
+    for (let i = 0; i < 150; i++) {
+        const square = document.createElement("div");
+        square.classList.add("square");
+        setRandomColor(rainbowColors, square);
+        setRandomPosition(square);
+        background.appendChild(square);
+    }
 }
 
-showButton.onclick = () => {
-    const squares = document.querySelectorAll(".square");
+eraseButton.onclick = () => {
     squares.forEach(square => {
         square.addEventListener("mouseover", () => {
             square.style.backgroundColor = "transparent";
@@ -17,24 +34,39 @@ showButton.onclick = () => {
     });
 }
 
-hideButton.onclick = () => {
-    const squares = document.querySelectorAll(".square");
+fillButton.onclick = () => {
     squares.forEach(square => {
         square.addEventListener("mouseover", () => {
-            changeToRainbow(square);
+            setRandomColor(rainbowColors, square);
         })
     });
 }
 
-function changeToRainbow(square) {
-    let rainbowColors = ["red", "blue", "orange", "purple", "green", "yellow"];
-    setRandomColor(rainbowColors, square);
+resetButton.onclick = () => {
+    squares.forEach(square => {
+        setRandomColor(rainbowColors, square);
+        setRandomPosition(square);
+    });
+}
+
+clearButton.onclick = () => {
+    squares.forEach(square => {
+        square.style.backgroundColor = "transparent";
+    });
+}
+
+cursorButton.onclick = () => {
+    
 }
 
 function setRandomColor(colors, square) {
-    currentIndex = colors.indexOf(square.style.backgroundColor);
-    let randomColor = Math.floor(Math.random() * colors.length);
+    let randomColor = Math.floor(Math.random() * (colors.length - 2));
     square.style.backgroundColor = colors[randomColor];
+}
+
+function setRandomPosition(square) {
+    let randomPosition = Math.floor(Math.random() * (positions.length - 2));
+    square.style.transform = positions[randomPosition];
 }
 
 
