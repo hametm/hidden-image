@@ -1,0 +1,27 @@
+body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+.background {
+    display: grid;
+    height: 40vw;
+    width: 60vw;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    background-image: url(./images/con-air.png);
+    background-position: cover;
+}
+
+.square {
+    background-color: rgb(173, 173, 173);
+}
+
+.square:hover {
+    background-color: magenta;
+}
+
+.transparent {
+    background-color: transparent;
+}
