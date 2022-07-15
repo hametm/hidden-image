@@ -12,8 +12,9 @@ body {
     width: 60vw;
     grid-template-columns: repeat(15, 1fr);
     grid-template-rows: repeat(10, 1fr);
-    background-image: url(./images/con-air.png);
-    background-position: cover;
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
 }
 
 .balloon {
