@@ -17,11 +17,3 @@ body {
 .square {
     background-color: rgb(173, 173, 173);
 }
-
-.square:hover {
-    background-color: magenta;
-}
-
-.transparent {
-    background-color: transparent;
-}
