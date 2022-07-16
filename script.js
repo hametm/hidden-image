@@ -15,6 +15,8 @@ const colorButtons = document.querySelectorAll(".colors");
 
 const squareButton = document.querySelector(".square");
 const circleButton = document.querySelector(".circle");
+const smileyButton = document.querySelector(".smiley");
+const shapeButtons = document.querySelectorAll(".shapes");
 
 
 const rainbow = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
@@ -37,7 +39,6 @@ function fillBoard() {
         const tile = document.createElement("div");
         tile.classList.add("tile");
         tile.style.backgroundColor = "white";
-        getShape(tile);
         background.appendChild(tile);
     }
 }
@@ -47,6 +48,7 @@ function erase() {
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
+            tile.style.backgroundImage = "none";
             tile.style.backgroundColor = "white";
         });
     });
@@ -90,8 +92,21 @@ function getPosition(tile) {
 }
 
 function getShape(tile) {
-    if (shape === "circle") tile.style.borderRadius = "50%";
-    if (shape === "square") tile.style.borderRadius = "0";
+    console.log(shape);
+    switch(shape) {
+        case "circle":
+            tile.classList.remove("smileyShape");
+            tile.classList.add("circleShape");
+            break;
+        case "square":
+            tile.classList.remove("smileyShape");
+            tile.classList.remove("circleShape");
+            break;
+        case "smiley":
+            tile.classList.remove("circleShape");
+            tile.classList.add("smileyShape");
+            break;
+    }
 }
 
 function getImage() {
@@ -200,13 +215,25 @@ clearButton.addEventListener("click", () => {
 
 squareButton.addEventListener("click", () => shape = "square");
 circleButton.addEventListener("click", () => shape = "circle");
+smileyButton.addEventListener("click", () => shape = "smiley");
 
 squareButton.addEventListener("click", () => {
-    circleButton.classList.remove("selected");
+    shapeButtons.forEach(button => {
+        button.classList.remove("selected");
+    });
     squareButton.classList.add("selected");
 });
 
 circleButton.addEventListener("click", () => {
-    squareButton.classList.remove("selected");
+    shapeButtons.forEach(button => {
+        button.classList.remove("selected");
+    });
     circleButton.classList.add("selected");
-})
+});
+
+smileyButton.addEventListener("click", () => {
+    shapeButtons.forEach(button => {
+        button.classList.remove("selected");
+    });
+    smileyButton.classList.add("selected");
+});

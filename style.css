@@ -106,3 +106,15 @@ button:active {
     margin: -70px 0 8rem 0;
     font-size: 1.25rem;
 }
+
+.circleShape {
+    border-radius: 50%;
+}
+
+.smileyShape {
+    background-image: url(./images/smile.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    border-radius: 7px;
+}
