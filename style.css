@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:wght@400;700&display=swap');
 
 :root {
-    --background: #fbf7f5;
     --sidebar: #68b1d5;
     --button: #ebeded;
-    --button-hover: #b1c4ce;;
+    --button-hover: #b2d1e2;;
 }
 
 body {
@@ -12,7 +11,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    background-color: var(--background);
+    background-color: white;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -21,27 +20,30 @@ main {
     flex-grow: 1;
 }
 
+.background-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
 
 .background {
     display: grid;
-    height: 40vw;
+    min-width: 600px;
+    min-height: 400px;
     width: 60vw;
+    height: 40vw;
     grid-template-columns: repeat(15, 1fr);
     grid-template-rows: repeat(10, 1fr);
     background-position: center;
-    background-size: 50%;
+    background-size: 45%;
     background-repeat: no-repeat;
-}
-
-.balloon {
-    border-radius: 50%;
 }
 
 .sidebar {
     display: flex;
     flex-direction: column;
-    /* min-width: 15rem;
-    width: 20vw; */
     width: 16rem;
     background-color: var(--sidebar);
     color: white;
@@ -100,8 +102,7 @@ button:active {
     transform: translate(-4px, 4px);
 }
 
-.background-container {
-    display: grid;
-    place-items: center;
-    flex-grow: 1;
+.result {
+    margin: -70px 0 8rem 0;
+    font-size: 1.25rem;
 }
