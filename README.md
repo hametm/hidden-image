@@ -7,3 +7,6 @@
 <a href="https://www.flaticon.com/free-icons/poseidon" title="poseidon icons">Poseidon icon created by max.icons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/wizard" title="wizard icons">Wizard icons created by max.icons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/smile" title="smile icons">Smile icon created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/eraser" title="eraser icons">Eraser icon created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/paintbrush" title="paintbrush icons">Paintbrush icons created by Freepik - Flaticon</a>
+Other icons by materialdesignicons.com

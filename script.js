@@ -1,16 +1,18 @@
 const background = document.querySelector(".background");
+const backgroundContainer = document.querySelector(".background-container");
 const result = document.querySelector(".result");
 const eraseButton = document.querySelector(".erase");
 const drawButton = document.querySelector(".draw");
 const secretButton = document.querySelector(".secret");
 const clearButton = document.querySelector(".clear");
-const controlButtons = document.querySelector(".controls");
+const controlButtons = document.querySelectorAll(".controls");
 
 const rainbowButton = document.querySelector(".rainbow");
 const blackButton = document.querySelector(".black");
 const redButton = document.querySelector(".red");
 const yellowButton = document.querySelector(".yellow");
 const blueButton = document.querySelector(".blue");
+const greenButton = document.querySelector(".green");
 const colorButtons = document.querySelectorAll(".colors");
 
 const squareButton = document.querySelector(".square");
@@ -27,7 +29,7 @@ const images = ["giraffe", "loch-ness-monster", "torii", "poseidon", "gandalf", 
 // Set defaults
 let image = "";
 let shape = "square";
-let colorChoice = rainbow;
+let colorChoice = "green";
 drawButton.classList.add("selected");
 squareButton.classList.add("selected");
 
@@ -44,7 +46,7 @@ function fillBoard() {
 }
 
 function erase() {
-    // background.style.setProperty("cursor", "url(./images/pin.png), auto");
+    backgroundContainer.style.setProperty("cursor", "url(./images/eraser.png), auto");
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
@@ -55,7 +57,7 @@ function erase() {
 }
 
 function draw() {
-    // background.style.setProperty("cursor", "url(./images/plus.png), auto");
+    backgroundContainer.style.setProperty("cursor", "url(./images/paintbrush.png), auto");
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
@@ -92,7 +94,6 @@ function getPosition(tile) {
 }
 
 function getShape(tile) {
-    console.log(shape);
     switch(shape) {
         case "circle":
             tile.classList.remove("smileyShape");
@@ -105,6 +106,7 @@ function getShape(tile) {
         case "smiley":
             tile.classList.remove("circleShape");
             tile.classList.add("smileyShape");
+            tile.style.backgroundImage = ("url(./images/smile.png");
             break;
     }
 }
@@ -116,6 +118,7 @@ function getImage() {
 }
 
 function clearBoard() {
+    backgroundContainer.style.setProperty("cursor", "auto");
     background.style.backgroundImage = "none";
     result.textContent = "";
     const tiles = document.querySelectorAll(".tile");
@@ -149,6 +152,13 @@ function getResultText() {
     }
 }
 
+function resetSelected(buttons, button) {
+    buttons.forEach(button => {
+        button.classList.remove("selected");
+    });
+    button.classList.add("selected");
+}
+
 eraseButton.addEventListener("click", () => {
     erase();
 });
@@ -178,62 +188,34 @@ blackButton.addEventListener("click", () => colorChoice = "black");
 redButton.addEventListener("click", () => colorChoice = "red");
 yellowButton.addEventListener("click", () => colorChoice = "yellow");
 blueButton.addEventListener("click", () => colorChoice = "blue");
+greenButton.addEventListener("click", () => colorChoice = "green");
 
 drawButton.classList.add("selected") // Set default control button
-rainbowButton.classList.add("selected"); // Set default color scheme
+greenButton.classList.add("selected"); // Set default color scheme
 
 colorButtons.forEach(button => {
     button.addEventListener("click", () => {
-        colorButtons.forEach(button => {
-            button.classList.remove("selected");
-        });
-        button.classList.add("selected");
+        resetSelected(colorButtons, button);
+        resetSelected(controlButtons, drawButton);
+        draw();
     });
 });
 
-eraseButton.addEventListener("click", () => {
-    drawButton.classList.remove("selected");
-    eraseButton.classList.add("selected");
+controlButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        resetSelected(controlButtons, button);
+        if (button === clearButton) button.classList.remove("selected");
+    });
 });
 
-drawButton.addEventListener("click", () => {
-    eraseButton.classList.remove("selected");
-    drawButton.classList.add("selected");
-});
-
-secretButton.addEventListener("click", () => {
-    drawButton.classList.remove("selected");
-    eraseButton.classList.remove("selected");
-    secretButton.classList.add("selected");
-});
-
-clearButton.addEventListener("click", () => {
-    drawButton.classList.remove("selected");
-    eraseButton.classList.remove("selected");
-    secretButton.classList.remove("selected");
+shapeButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        resetSelected(shapeButtons, button);
+        resetSelected(controlButtons, drawButton);
+        draw();
+    })
 });
 
 squareButton.addEventListener("click", () => shape = "square");
 circleButton.addEventListener("click", () => shape = "circle");
 smileyButton.addEventListener("click", () => shape = "smiley");
-
-squareButton.addEventListener("click", () => {
-    shapeButtons.forEach(button => {
-        button.classList.remove("selected");
-    });
-    squareButton.classList.add("selected");
-});
-
-circleButton.addEventListener("click", () => {
-    shapeButtons.forEach(button => {
-        button.classList.remove("selected");
-    });
-    circleButton.classList.add("selected");
-});
-
-smileyButton.addEventListener("click", () => {
-    shapeButtons.forEach(button => {
-        button.classList.remove("selected");
-    });
-    smileyButton.classList.add("selected");
-});

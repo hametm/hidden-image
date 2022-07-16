@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Open+Sans:wght@400;700&display=swap');
 
 :root {
-    --sidebar: #68b1d5;
-    --button: #ebeded;
-    --button-hover: #b2d1e2;;
+    --sidebar: #e9e9e9;
+    --button: #c8c8c8;
+    --button-hover: #acacac;;
 }
 
 body {
@@ -13,6 +13,27 @@ body {
     margin: 0;
     background-color: white;
     font-family: 'Open Sans', sans-serif;
+}
+
+header {
+    background-color: rgb(101, 153, 237);
+    padding: .5rem 1rem;
+}
+
+header h1 {
+    margin: 0;
+    color: white;
+    text-shadow: -3px 3px black;
+    font-size: 2.5rem;
+}
+
+.rainbow-bar {
+    height: 10px;
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, 
+    rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, 
+    rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
 }
 
 main {
@@ -44,33 +65,22 @@ main {
 .sidebar {
     display: flex;
     flex-direction: column;
-    width: 16rem;
     background-color: var(--sidebar);
-    color: white;
-    padding: 2rem;
-}
-
-.sidebar h2 {
-    text-shadow: -2px 2px black;
-    margin: 2rem .7rem .75rem 0;
-    font-family: 'Chewy', cursive;
-    font-size: 2rem;
-    letter-spacing: 2px;
-}
-
-.control-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 2rem;
-    row-gap: 1rem;
-}
-
-.color-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 1rem 2rem;
     gap: 1rem;
+    border-right: 2px solid grey;
+    box-shadow: 2px 2px 5px grey;
+}
+
+.selected {
+    background-color: var(--button-hover);
+    box-shadow: inset -3px 3px black;
+    transform: translate(-4px, 4px);
+}
+
+.result {
+    margin: -70px 0 8rem 0;
+    font-size: 1.25rem;
 }
 
 button {
@@ -83,7 +93,7 @@ button {
     font-size: 1rem;
 }
 
-button:hover {
+.controls:hover, .shapes:hover {
     background-color: var(--button-hover);
     cursor: pointer;
 }
@@ -92,19 +102,106 @@ button:active {
     transform: translate(-2px, 2px)
 }
 
+.control-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.controls {
+    height: 50px;
+    width: 50px;
+    background-position: center;
+    background-size: 75%;
+    background-repeat: no-repeat;
+}
+
+.draw {
+    background-image: url(./images/brush-icon-black.png);
+}
+
+.erase {
+    background-image: url(./images/eraser-icon-black.png);
+}
+
+.clear {
+    background-image: url(./images/clear-icon-black.png);
+}
+
+.secret {
+    background-image: url(./images/shimmer-icon-black.png);
+}
+
 .colors {
     width: 9rem;
 }
 
-.selected {
-    background-color: var(--button-hover);
-    box-shadow: inset -3px 3px black;
-    transform: translate(-4px, 4px);
+.color-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1rem;
 }
 
-.result {
-    margin: -70px 0 8rem 0;
-    font-size: 1.25rem;
+.colors {
+    height: 35px;
+    width: 35px;
+}
+
+.colors:hover {
+    cursor: pointer;
+}
+
+.rainbow {
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, 
+    rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, 
+    rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
+}
+
+.green {
+    background-color: green;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.black {
+    background-color: black;
+}
+
+.shape-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.shapes {
+    height: 50px;
+    width: 50px;
+    background-position: center;
+    background-size: 75%;
+    background-repeat: no-repeat;
+}
+
+.square {
+    background-image: url(./images/square-icon.png);
+}
+
+.circle {
+    background-image: url(./images/circle-icon.png);
+}
+
+.smiley {
+    background-image: url(./images/smile-icon.png);
 }
 
 .circleShape {
