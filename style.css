@@ -1,11 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:wght@400;700&display=swap');
 
+:root {
+    --background: #fbf7f5;
+    --sidebar: #68b1d5;
+    --button: #ebeded;
+    --button-hover: #b1c4ce;;
+}
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    background-color: #fbf7f5;
+    background-color: var(--background);
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -14,43 +21,6 @@ main {
     flex-grow: 1;
 }
 
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 17vw;
-    background-color: #45d1d9;
-}
-
-.sidebar h1 {
-    font-family: 'Chewy', cursive;
-}
-
-.buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.button-container {
-    display: grid;
-    place-items: center;
-    padding: 1rem;
-}
-
-button {
-    font-family: 'Open Sans', sans-serif;
-}
-
-.selected {
-    background-color: blue;
-}
-
-.background-container {
-    display: grid;
-    place-items: center;
-    flex-grow: 1;
-}
 
 .background {
     display: grid;
@@ -65,4 +35,73 @@ button {
 
 .balloon {
     border-radius: 50%;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    /* min-width: 15rem;
+    width: 20vw; */
+    width: 16rem;
+    background-color: var(--sidebar);
+    color: white;
+    padding: 2rem;
+}
+
+.sidebar h2 {
+    text-shadow: -2px 2px black;
+    margin: 2rem .7rem .75rem 0;
+    font-family: 'Chewy', cursive;
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
+
+.control-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 2rem;
+    row-gap: 1rem;
+}
+
+.color-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+button {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--button);
+    border-radius: 8px;
+    padding: 10px;
+    border: 2px solid grey;
+    box-shadow: -3px 3px black;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+    cursor: pointer;
+}
+
+button:active {
+    transform: translate(-2px, 2px)
+}
+
+.colors {
+    width: 9rem;
+}
+
+.selected {
+    background-color: var(--button-hover);
+    box-shadow: inset -3px 3px black;
+    transform: translate(-4px, 4px);
+}
+
+.background-container {
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
 }
