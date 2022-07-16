@@ -3,6 +3,7 @@ const popButton = document.querySelector(".pop");
 const fillButton = document.querySelector(".fill");
 const resetButton = document.querySelector(".reset");
 const clearButton = document.querySelector(".clear");
+const controlButtons = document.querySelector(".controls");
 
 const rainbowButton = document.querySelector(".rainbow");
 const oceanButton = document.querySelector(".ocean");
@@ -11,9 +12,8 @@ const bowieButton = document.querySelector(".bowie");
 const peachesButton = document.querySelector(".peaches");
 const colorButtons = document.querySelectorAll(".colors");
 
-
 const rainbowColors = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
-        "#8ed1b5", "#55cbcb", "#44b0c6", "757acd", "e272d5"];
+        "#8ed1b5", "#55cbcb", "#44b0c6", "#757acd", "#e272d5"];
 const oceanColors = ["#093862", "#0960a3", "#54a7d9", "#a9dafb", "#7bafba", "#3f999a", "#1e7c96"];
 const peachColors = ["#f8bb51", "#f99827", "#f3d5af", "#f6bf87", "#f0631e", "#f7865e"];
 const bowieColors = ["#f2ddd8", "#e83d05", "#b90005", "#39b2ba", "#030639"];
@@ -22,10 +22,11 @@ const positions = ["scale(2) translateX(-20px)", "scale(2) translateX(20px)",
         "scale(2) translateY(-20px)", "scale(2) translateY(20px)"];
 const images = ["giraffe", "loch-ness-monster", "torii", "poseidon", "gandalf", "dragon-fruit"];
 
-let colorScheme = rainbowColors;
-
+let colorScheme = rainbowColors; // Set default color scheme
+popButton.classList.add("selected");
 
 fillBoard();
+popBalloons();
 
 function fillBoard() {
     for (let i = 0; i < 150; i++) {
@@ -38,9 +39,27 @@ function fillBoard() {
     getImage();
 }
 
-popButton.onclick = () => {
-    const balloons = document.querySelectorAll(".balloon");
+popButton.addEventListener("click", () => {
+    popBalloons();
+});
+
+fillButton.addEventListener("click", () => {
+    fillBalloons();
+});
+    
+resetButton.addEventListener("click", () => {
+    clearBoard();
+    fillBoard();
+    popBalloons();
+});
+
+clearButton.addEventListener("click", () => {
+    clearBoard();
+});
+
+function popBalloons() {
     // background.style.setProperty("cursor", "url(./images/pin.png), auto");
+    const balloons = document.querySelectorAll(".balloon");
     balloons.forEach(balloon => {
         balloon.addEventListener("mouseover", () => {
             balloon.style.backgroundColor = "transparent";
@@ -49,7 +68,7 @@ popButton.onclick = () => {
     });
 }
 
-fillButton.onclick = () => {
+function fillBalloons() {
     // background.style.setProperty("cursor", "url(./images/plus.png), auto");
     let balloonsExist = document.querySelector(".balloon");
     if (balloonsExist) {
@@ -75,17 +94,8 @@ fillButton.onclick = () => {
     }
 }
 
-resetButton.onclick = () => {
-    clearBoard();
-    fillBoard();
-}
-
-clearButton.onclick = () => {
-    clearBoard();
-}
-
 function getColor(colors, balloon) {
-    let randomColor = Math.floor(Math.random() * (colors.length));
+    let randomColor = Math.floor(Math.random() * colors.length);
     balloon.style.backgroundColor = colors[randomColor];
 }
 
@@ -113,17 +123,34 @@ hogwartsButton.addEventListener("click", () => colorScheme = hogwartsColors);
 bowieButton.addEventListener("click", () => colorScheme = bowieColors);
 peachesButton.addEventListener("click", () => colorScheme = peachColors);
 
+// popButton.classList.add("selected") // Set default control button
 rainbowButton.classList.add("selected"); // Set default color scheme
 
 colorButtons.forEach(button => {
-    button.onclick = () => {
+    button.addEventListener("click", () => {
         colorButtons.forEach(button => {
             button.classList.remove("selected");
         });
         button.classList.add("selected");
-    }
+    });
 });
 
+popButton.addEventListener("click", () => {
+    fillButton.classList.remove("selected");
+    popButton.classList.add("selected");
+});
 
+fillButton.addEventListener("click", () => {
+    popButton.classList.remove("selected");
+    fillButton.classList.add("selected");
+});
 
+resetButton.addEventListener("click", () => {
+    fillButton.classList.remove("selected");
+    popButton.classList.add("selected");
+});
 
+clearButton.addEventListener("click", () => {
+    fillButton.classList.remove("selected");
+    popButton.classList.remove("selected");
+});
