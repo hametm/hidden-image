@@ -1,6 +1,6 @@
 const background = document.querySelector(".background");
 const backgroundContainer = document.querySelector(".background-container");
-const result = document.querySelector(".result");
+
 const eraseButton = document.querySelector(".erase");
 const drawButton = document.querySelector(".draw");
 const blurButton = document.querySelector(".blur");
@@ -20,22 +20,19 @@ const circleButton = document.querySelector(".circle");
 const smileyButton = document.querySelector(".smiley");
 const shapeButtons = document.querySelectorAll(".shapes");
 
-
 const rainbow = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
         "#8ed1b5", "#55cbcb", "#44b0c6", "#757acd", "#e272d5"];
 const positions = ["translateX(-20px)", "translateX(20px)", "translateY(-20px)", "translateY(20px)"];
-const images = ["giraffe", "loch-ness-monster", "torii", "poseidon", "gandalf", "dragon-fruit"];
+
+// Refresh when "canvas" is resized
+window.onresize = () => location.reload(); 
 
 // Set defaults
-let image = "";
 let shape = "square";
 let colorChoice = "green";
 drawButton.classList.add("selected");
 squareButton.classList.add("selected");
-
-// Refresh when "canvas" is resized
-window.onresize = () => {location.reload();}
-
+greenButton.classList.add("selected"); 
 fillBoard();
 draw();
 
@@ -139,14 +136,13 @@ function reset(tile) {
 function clearBoard() {
     backgroundContainer.style.setProperty("cursor", "auto");
     background.style.backgroundImage = "none";
-    result.textContent = "";
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.remove();
     });
 }
 
-function resetSelected(buttons, button) {
+function setSelectedButton(buttons, button) {
     buttons.forEach(button => {
         button.classList.remove("selected");
     });
@@ -165,52 +161,51 @@ function getColumnCount() {
     return gridColumnCount;
 }
 
-eraseButton.addEventListener("click", () => {
-    erase();
-});
+// Event listeners
 
-drawButton.addEventListener("click", () => {
-    draw();
-});
-    
-blurButton.addEventListener("click", () => {
-    drawBlur();
-});
-
+// Controls
+eraseButton.addEventListener("click", () => erase());
+drawButton.addEventListener("click", () => draw());
+blurButton.addEventListener("click", () => drawBlur());
 clearButton.addEventListener("click", () => {
     clearBoard();
     fillBoard();
 });
+controlButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        setSelectedButton(controlButtons, button);
+        if (button === clearButton) button.classList.remove("selected");
+    });
+});
 
+// Colors
 rainbowButton.addEventListener("click", () => colorChoice = rainbow);
 blackButton.addEventListener("click", () => colorChoice = "black");
 redButton.addEventListener("click", () => colorChoice = "red");
 yellowButton.addEventListener("click", () => colorChoice = "yellow");
 blueButton.addEventListener("click", () => colorChoice = "blue");
 greenButton.addEventListener("click", () => colorChoice = "green");
-
-drawButton.classList.add("selected") // Set default control button
-greenButton.classList.add("selected"); // Set default color scheme
-
 colorButtons.forEach(button => {
     button.addEventListener("click", () => {
-        resetSelected(colorButtons, button);
+        setSelectedButton(colorButtons, button);
     });
 });
 
-controlButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        resetSelected(controlButtons, button);
-        if (button === clearButton) button.classList.remove("selected");
-    });
-});
-
-shapeButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        resetSelected(shapeButtons, button);
-    })
-});
-
+// Shapes
 squareButton.addEventListener("click", () => shape = "square");
 circleButton.addEventListener("click", () => shape = "circle");
 smileyButton.addEventListener("click", () => shape = "smiley");
+shapeButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        setSelectedButton(shapeButtons, button);
+    })
+});
+
+
+
+
+
+
+
+
+
