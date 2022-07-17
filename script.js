@@ -3,7 +3,7 @@ const backgroundContainer = document.querySelector(".background-container");
 const result = document.querySelector(".result");
 const eraseButton = document.querySelector(".erase");
 const drawButton = document.querySelector(".draw");
-const secretButton = document.querySelector(".secret");
+const blurButton = document.querySelector(".blur");
 const clearButton = document.querySelector(".clear");
 const controlButtons = document.querySelectorAll(".controls");
 
@@ -33,11 +33,16 @@ let colorChoice = "green";
 drawButton.classList.add("selected");
 squareButton.classList.add("selected");
 
+// Refresh when "canvas" is resized
+window.onresize = () => {location.reload();}
+
 fillBoard();
 draw();
 
 function fillBoard() {
-    for (let i = 0; i < 150; i++) {
+    let rowCount = getRowCount();
+    let columnCount = getColumnCount();
+    for (let i = 0; i < rowCount * columnCount; i++) {
         const tile = document.createElement("div");
         tile.classList.add("tile");
         tile.style.backgroundColor = "white";
@@ -50,6 +55,7 @@ function erase() {
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
+            reset(tile);
             tile.style.backgroundImage = "none";
             tile.style.backgroundColor = "white";
         });
@@ -61,6 +67,7 @@ function draw() {
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
+            reset(tile);
             getColor(colorChoice, tile);
             getPosition(tile);
             getShape(tile);
@@ -68,13 +75,27 @@ function draw() {
     });
 }
 
-function findHiddenImage() {
+function drawBlur() {
+    backgroundContainer.style.setProperty("cursor", "url(./images/paintbrush.png), auto");
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
-            tile.style.backgroundColor = "transparent";
+            getBlur(tile);
+            getColor(colorChoice, tile);
+            getPosition(tile);
+            getShape(tile);
         });
     });
+}
+
+function getBlur(tile) {
+    if (colorChoice === rainbow) {
+        tile.classList.add("rainbowBlurBrush");
+    }
+    else {
+        tile.style.color = colorChoice;
+        tile.classList.add("blurBrush");
+    }
 }
 
 function getColor(colorChoice, tile) {
@@ -111,10 +132,8 @@ function getShape(tile) {
     }
 }
 
-function getImage() {
-    let randomImage = Math.floor(Math.random() * (images.length));
-    image = images[randomImage];
-    background.style.backgroundImage = `url(./images/${image}.png)`;
+function reset(tile) {
+    tile.classList.remove("blurBrush", "rainbowBlurBrush");
 }
 
 function clearBoard() {
@@ -127,36 +146,23 @@ function clearBoard() {
     });
 }
 
-function getResultText() {
-    switch(image) {
-        case "giraffe":
-            result.textContent = "It's a giraffe!";
-            break;
-        case "loch-ness-monster":
-            result.textContent = "It's the Loch Ness Monster!";
-            break;
-        case "torii":
-            result.textContent = "It's a Shinto shrine!";
-            break;
-        case "poseidon":
-            result.textContent = "It's King Neptune!";
-            break;
-        case "gandalf":
-            result.textContent = "It's Gandalf the Grey!";
-            break;
-        case "dragon-fruit":
-            result.textContent = "It's a dragonfruit!";
-            break;
-        default:
-            result.textContent = "I don't know what it is!"
-    }
-}
-
 function resetSelected(buttons, button) {
     buttons.forEach(button => {
         button.classList.remove("selected");
     });
     button.classList.add("selected");
+}
+
+function getRowCount() {
+    const gridComputedStyle = window.getComputedStyle(background);
+    const gridRowCount = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
+    return gridRowCount;
+}
+
+function getColumnCount() {
+    const gridComputedStyle = window.getComputedStyle(background);
+    const gridColumnCount = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
+    return gridColumnCount;
 }
 
 eraseButton.addEventListener("click", () => {
@@ -167,15 +173,8 @@ drawButton.addEventListener("click", () => {
     draw();
 });
     
-secretButton.addEventListener("click", () => {
-    shape = "square";
-    squareButton.classList.add("selected");
-    circleButton.classList.remove("selected");
-    clearBoard();
-    fillBoard();
-    getImage();
-    getResultText();
-    findHiddenImage();
+blurButton.addEventListener("click", () => {
+    drawBlur();
 });
 
 clearButton.addEventListener("click", () => {
@@ -196,8 +195,6 @@ greenButton.classList.add("selected"); // Set default color scheme
 colorButtons.forEach(button => {
     button.addEventListener("click", () => {
         resetSelected(colorButtons, button);
-        resetSelected(controlButtons, drawButton);
-        draw();
     });
 });
 
@@ -211,8 +208,6 @@ controlButtons.forEach(button => {
 shapeButtons.forEach(button => {
     button.addEventListener("click", () => {
         resetSelected(shapeButtons, button);
-        resetSelected(controlButtons, drawButton);
-        draw();
     })
 });
 
