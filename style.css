@@ -15,6 +15,10 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+li {
+    list-style-type: none;
+}
+
 header {
     background-color: rgb(101, 153, 237);
     padding: .5rem 1rem;
@@ -68,7 +72,7 @@ main {
 }
 
 .selected {
-    /* background-color: var(--button-hover); */
+    background-color: var(--button-hover);
     box-shadow: inset -3px 3px black;
     transform: translate(-4px, 4px);
 }
@@ -89,12 +93,7 @@ button {
 }
 
 .controls:hover {
-    /* background-color: var(--button-hover); */
-    cursor: pointer;
-}
-
-.shapes:hover {
-    /* background-color: #cdbdc1; */
+    background-color: var(--button-hover);
     cursor: pointer;
 }
 
@@ -122,10 +121,6 @@ button:active {
         0px 2px 8px,
         -2px 0px 8px,
         0px -2px 8px;
-}
-
-.rainbowBlurBrush {
-    box-shadow: inset 0px 0px 7px 7px white;
 }
 
 .draw {
@@ -190,21 +185,6 @@ button:active {
     background-color: black;
 }
 
-.shape-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.shapes {
-    height: 50px;
-    width: 50px;
-    background-position: center;
-    background-size: 75%;
-    background-repeat: no-repeat;
-    background-color: #e9dcdf;
-}
-
 .square {
     background-image: url(./images/square-icon.png);
 }
@@ -215,6 +195,10 @@ button:active {
 
 .smiley {
     background-image: url(./images/smile-icon.png);
+}
+
+.squareShape {
+    border-radius: 0;
 }
 
 .circleShape {

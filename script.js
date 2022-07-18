@@ -28,10 +28,8 @@ const positions = ["translateX(-20px)", "translateX(20px)", "translateY(-20px)",
 window.onresize = () => location.reload(); 
 
 // Set defaults
-let shape = "square";
 let colorChoice = "green";
 drawButton.classList.add("selected");
-squareButton.classList.add("selected");
 greenButton.classList.add("selected"); 
 fillBoard();
 draw();
@@ -52,22 +50,21 @@ function erase() {
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
+            getShape(tile, "square");
             reset(tile);
-            tile.style.backgroundImage = "none";
-            tile.style.backgroundColor = "white";
         });
     });
 }
 
-function draw() {
+function draw(shape) {
     backgroundContainer.style.setProperty("cursor", "url(./images/paintbrush.png), auto");
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
-            reset(tile);
+            getShape(tile, shape);
+            tile.classList.remove("blurBrush");
             getColor(colorChoice, tile);
             getPosition(tile);
-            getShape(tile);
         });
     });
 }
@@ -77,22 +74,22 @@ function drawBlur() {
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
-            getBlur(tile);
+            getShape(tile, "circle");
             getColor(colorChoice, tile);
+            getBlur(tile);
             getPosition(tile);
-            getShape(tile);
         });
     });
 }
 
 function getBlur(tile) {
     if (colorChoice === rainbow) {
-        tile.classList.add("rainbowBlurBrush");
+        tile.style.color = tile.style.backgroundColor;
     }
     else {
         tile.style.color = colorChoice;
-        tile.classList.add("blurBrush");
     }
+    tile.classList.add("blurBrush");
 }
 
 function getColor(colorChoice, tile) {
@@ -111,7 +108,7 @@ function getPosition(tile) {
     tile.style.transform = positions[randomPosition];
 }
 
-function getShape(tile) {
+function getShape(tile, shape) {
     switch(shape) {
         case "circle":
             tile.classList.remove("smileyShape");
@@ -130,7 +127,9 @@ function getShape(tile) {
 }
 
 function reset(tile) {
-    tile.classList.remove("blurBrush", "rainbowBlurBrush");
+    tile.classList.remove("blurBrush");
+    tile.style.backgroundImage = "none";
+    tile.style.backgroundColor = "white";
 }
 
 function clearBoard() {
@@ -164,9 +163,11 @@ function getColumnCount() {
 // Event listeners
 
 // Controls
-eraseButton.addEventListener("click", () => erase());
-drawButton.addEventListener("click", () => draw());
+drawButton.addEventListener("click", () => draw("square"));
+circleButton.addEventListener("click", () => draw("circle"));
+smileyButton.addEventListener("click", () => draw("smiley"));
 blurButton.addEventListener("click", () => drawBlur());
+eraseButton.addEventListener("click", () => erase());
 clearButton.addEventListener("click", () => {
     clearBoard();
     fillBoard();
@@ -189,16 +190,6 @@ colorButtons.forEach(button => {
     button.addEventListener("click", () => {
         setSelectedButton(colorButtons, button);
     });
-});
-
-// Shapes
-squareButton.addEventListener("click", () => shape = "square");
-circleButton.addEventListener("click", () => shape = "circle");
-smileyButton.addEventListener("click", () => shape = "smiley");
-shapeButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        setSelectedButton(shapeButtons, button);
-    })
 });
 
 
