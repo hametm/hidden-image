@@ -24,8 +24,11 @@ const pinkButton = document.getElementById("pink");
 const rainbowButton = document.getElementById("rainbow");
 const colorButtons = document.querySelectorAll(".colors");
 
-// Refresh when "canvas" is resized
+// Refresh when the "canvas" is resized
 window.onresize = () => location.reload(); 
+
+// Allow for scrolling when the page is too small for all the
+setSidebarHeight();
 
 // Set defaults
 let colorChoice = "green";
@@ -157,18 +160,6 @@ function setSelectedButton(buttons, button) {
     button.classList.add("selected");
 }
 
-function getRowCount() {
-    const gridComputedStyle = window.getComputedStyle(background);
-    const gridRowCount = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
-    return gridRowCount;
-}
-
-function getColumnCount() {
-    const gridComputedStyle = window.getComputedStyle(background);
-    const gridColumnCount = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
-    return gridColumnCount;
-}
-
 function setButtonColor(button) {
     if (button !== rainbowButton) button.style.backgroundColor = button.id;
 }
@@ -183,6 +174,32 @@ function setColorChoice(button) {
     });
 }
 
+function getRowCount() {
+    const gridComputedStyle = window.getComputedStyle(background);
+    const gridRowCount = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
+    return gridRowCount;
+}
+
+function getColumnCount() {
+    const gridComputedStyle = window.getComputedStyle(background);
+    const gridColumnCount = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
+    return gridColumnCount;
+}
+
+function setSidebarHeight() {
+    const header = document.querySelector("header");
+    const container = document.querySelector(".control-buttons-container");
+    let headerComputedStyle = window.getComputedStyle(header);
+    let headerHeight = headerComputedStyle.getPropertyValue("height");
+    let windowHeight = window.innerHeight;
+
+    let headerHeighArray = headerHeight.split("");
+    headerHeighArray.splice(-2, 2);
+    let newHeaderHeight = headerHeighArray.join("");
+
+    container.style.height= `${(windowHeight - newHeaderHeight) - 15}px`;
+}
+
 // Event listeners
 
 // Controls
@@ -192,9 +209,7 @@ smileyButton.addEventListener("click", () => draw("smiley"));
 blurButton.addEventListener("click", () => draw("blur"));
 squareOutlineButton.addEventListener("click", () => draw("squareOutline"));
 circleOutlineButton.addEventListener("click", () => draw("circleOutline"));
-dinosaurButton.addEventListener("click", () => {
-    draw("dinosaur");
-});
+dinosaurButton.addEventListener("click", () => draw("dinosaur"));
 eraseButton.addEventListener("click", () => erase());
 clearButton.addEventListener("click", () => {
     clearBoard();
@@ -204,7 +219,8 @@ controlButtons.forEach(button => {
     setButtonIcon(button);
     button.addEventListener("click", () => {
         setSelectedButton(controlButtons, button);
-        if (button === clearButton) button.classList.remove("selected"); // So "clear" doesn't remain selected after clicking it
+        if (button === clearButton) button.classList.remove("selected");
+        if (button === dinosaurButton) setSelectedButton(colorButtons, button);
     });
 });
 
