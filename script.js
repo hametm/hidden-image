@@ -51,8 +51,8 @@ function draw(shape) {
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
             removeStyles(tile);
-            getShape(tile, shape);
             getColor(colorChoice, tile);
+            getShape(tile, shape);
             getPosition(tile);
         });
     });
@@ -113,8 +113,8 @@ function getShape(tile, shape) {
             tile.classList.add("dinosaurShape");
             break;
         case "blur":
-            tile.classList.add("blurShape");
             getBlurColor(tile);
+            tile.classList.add("blurShape");
     }
 }
 
@@ -132,6 +132,7 @@ function getRandomImage() {
 
 function reset(tile) {
     removeStyles(tile);
+    tile.style.boxShadow = "none";
     tile.style.backgroundImage = "none";
     tile.style.backgroundColor = "white";
 }
