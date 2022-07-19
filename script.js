@@ -1,8 +1,10 @@
 const background = document.querySelector(".background");
 const backgroundContainer = document.querySelector(".background-container");
 
-const eraseButton = document.querySelector(".erase");
 const drawButton = document.querySelector(".draw");
+const eraseButton = document.querySelector(".erase");
+const circleButton = document.querySelector(".circle");
+const smileyButton = document.querySelector(".smiley");
 const blurButton = document.querySelector(".blur");
 const clearButton = document.querySelector(".clear");
 const controlButtons = document.querySelectorAll(".controls");
@@ -14,15 +16,6 @@ const yellowButton = document.querySelector(".yellow");
 const blueButton = document.querySelector(".blue");
 const greenButton = document.querySelector(".green");
 const colorButtons = document.querySelectorAll(".colors");
-
-const squareButton = document.querySelector(".square");
-const circleButton = document.querySelector(".circle");
-const smileyButton = document.querySelector(".smiley");
-const shapeButtons = document.querySelectorAll(".shapes");
-
-const rainbow = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
-        "#8ed1b5", "#55cbcb", "#44b0c6", "#757acd", "#e272d5"];
-const positions = ["translateX(-20px)", "translateX(20px)", "translateY(-20px)", "translateY(20px)"];
 
 // Refresh when "canvas" is resized
 window.onresize = () => location.reload(); 
@@ -45,6 +38,19 @@ function fillBoard() {
     }
 }
 
+function draw(shape) {
+    backgroundContainer.style.setProperty("cursor", "url(./images/paintbrush.png), auto");
+    const tiles = document.querySelectorAll(".tile");
+    tiles.forEach(tile => {
+        tile.addEventListener("mouseover", () => {
+            removeBlur(tile);
+            getShape(tile, shape);
+            getColor(colorChoice, tile);
+            getPosition(tile);
+        });
+    });
+}
+
 function erase() {
     backgroundContainer.style.setProperty("cursor", "url(./images/eraser.png), auto");
     const tiles = document.querySelectorAll(".tile");
@@ -52,19 +58,6 @@ function erase() {
         tile.addEventListener("mouseover", () => {
             getShape(tile, "square");
             reset(tile);
-        });
-    });
-}
-
-function draw(shape) {
-    backgroundContainer.style.setProperty("cursor", "url(./images/paintbrush.png), auto");
-    const tiles = document.querySelectorAll(".tile");
-    tiles.forEach(tile => {
-        tile.addEventListener("mouseover", () => {
-            getShape(tile, shape);
-            tile.classList.remove("blurBrush");
-            getColor(colorChoice, tile);
-            getPosition(tile);
         });
     });
 }
@@ -83,28 +76,28 @@ function drawBlur() {
 }
 
 function getBlur(tile) {
-    if (colorChoice === rainbow) {
-        tile.style.color = tile.style.backgroundColor;
-    }
-    else {
-        tile.style.color = colorChoice;
-    }
+    getBlurColor(tile);
     tile.classList.add("blurBrush");
 }
 
+function getBlurColor(tile) {
+    if (colorChoice === "rainbow") tile.style.color = tile.style.backgroundColor;
+    else tile.style.color = colorChoice;
+}
+
 function getColor(colorChoice, tile) {
-    let color;
-    if (colorChoice === rainbow) {
-        let randomColor = Math.floor(Math.random() * colorChoice.length);
-        color = colorChoice[randomColor];
-    } else {
-        color = colorChoice;
-    }
-   tile.style.backgroundColor = color;
+    if (colorChoice === "rainbow") {
+        const rainbow = ["#ec87b9", "#e75ea3", "#fbbd4e", "#fdd349", 
+        "#8ed1b5", "#55cbcb", "#44b0c6", "#757acd", "#e272d5"];
+        let randomColor = getRandomNumber(rainbow);
+        tile.style.backgroundColor = rainbow[randomColor];
+    } 
+    else tile.style.backgroundColor = colorChoice;
 }
 
 function getPosition(tile) {
-    let randomPosition = Math.floor(Math.random() * (positions.length));
+    const positions = ["translateX(-20px)", "translateX(20px)", "translateY(-20px)", "translateY(20px)"];
+    let randomPosition = getRandomNumber(positions);
     tile.style.transform = positions[randomPosition];
 }
 
@@ -126,15 +119,23 @@ function getShape(tile, shape) {
     }
 }
 
+function getRandomNumber(array) {
+    let randomNumber = Math.floor(Math.random() * array.length);
+    return randomNumber;
+}
+
 function reset(tile) {
-    tile.classList.remove("blurBrush");
+    removeBlur(tile);
     tile.style.backgroundImage = "none";
     tile.style.backgroundColor = "white";
 }
 
+function removeBlur(tile) {
+    tile.classList.remove("blurBrush");
+}
+
 function clearBoard() {
     backgroundContainer.style.setProperty("cursor", "auto");
-    background.style.backgroundImage = "none";
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.remove();
@@ -175,12 +176,12 @@ clearButton.addEventListener("click", () => {
 controlButtons.forEach(button => {
     button.addEventListener("click", () => {
         setSelectedButton(controlButtons, button);
-        if (button === clearButton) button.classList.remove("selected");
+        if (button === clearButton) button.classList.remove("selected"); // So "clear" doesn't remain selected after clicking it
     });
 });
 
 // Colors
-rainbowButton.addEventListener("click", () => colorChoice = rainbow);
+rainbowButton.addEventListener("click", () => colorChoice = "rainbow");
 blackButton.addEventListener("click", () => colorChoice = "black");
 redButton.addEventListener("click", () => colorChoice = "red");
 yellowButton.addEventListener("click", () => colorChoice = "yellow");
