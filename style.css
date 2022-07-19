@@ -116,7 +116,8 @@ button:active {
     background-repeat: no-repeat;
 }
 
-.blurBrush {
+.blurShape {
+    border-radius: 50%;
     box-shadow:
         2px 0px 8px,
         0px 2px 8px,
@@ -172,7 +173,7 @@ button:active {
 }
 
 .smileyShape {
-    background-image: url(./images/smile.png);
+    background-image: url(./images/smiley-face.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 70%;
@@ -181,5 +182,12 @@ button:active {
 
 .outlineShape {
     outline: 3px solid black;
+}
+
+.dinosaurShape {
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent !important;
 }
 

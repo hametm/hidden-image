@@ -8,6 +8,7 @@ const smileyButton = document.getElementById("smiley");
 const squareOutlineButton = document.getElementById("square-outline");
 const circleOutlineButton = document.getElementById("circle-outline");
 const blurButton = document.getElementById("blur");
+const dinosaurButton = document.getElementById("dinosaur");
 const clearButton = document.getElementById("clear");
 const controlButtons = document.querySelectorAll(".controls");
 
@@ -68,24 +69,6 @@ function erase() {
     });
 }
 
-function drawBlur() {
-    backgroundContainer.style.setProperty("cursor", "url(./images/paintbrush.png), auto");
-    const tiles = document.querySelectorAll(".tile");
-    tiles.forEach(tile => {
-        tile.addEventListener("mouseover", () => {
-            getShape(tile, "circle");
-            getColor(colorChoice, tile);
-            getBlur(tile);
-            getPosition(tile);
-        });
-    });
-}
-
-function getBlur(tile) {
-    getBlurColor(tile);
-    tile.classList.add("blurBrush");
-}
-
 function getBlurColor(tile) {
     if (colorChoice === "rainbow") tile.style.color = tile.style.backgroundColor;
     else tile.style.color = colorChoice;
@@ -110,33 +93,41 @@ function getPosition(tile) {
 function getShape(tile, shape) {
     switch(shape) {
         case "circle":
-            tile.classList.remove("smileyShape", "outlineShape");
             tile.classList.add("circleShape");
             break;
         case "square":
-            tile.classList.remove("smileyShape", "circleShape", "outlineShape");
             break;
         case "smiley":
-            tile.classList.remove("circleShape", "outlineShape");
             tile.classList.add("smileyShape");
-            tile.style.backgroundImage = ("url(./images/smiley-face.png");
+            tile.style.backgroundImage = "url(./images/smiley-face.png)";
             break;
-        case "squareOutline": {
-            tile.classList.remove("circleShape", "smileyShape");
+        case "squareOutline": 
             tile.classList.add("outlineShape");
             break;
-        }
-        case "circleOutline": {
-            tile.classList.remove("smileyShape");
+        
+        case "circleOutline": 
             tile.classList.add("circleShape", "outlineShape");
             break;
-        }
+        case "dinosaur": 
+            tile.style.backgroundImage = `url(./images/${getRandomImage()}.png)`;
+            tile.classList.add("dinosaurShape");
+            break;
+        case "blur":
+            tile.classList.add("blurShape");
+            getBlurColor(tile);
     }
 }
 
 function getRandomNumber(array) {
     let randomNumber = Math.floor(Math.random() * array.length);
     return randomNumber;
+}
+
+function getRandomImage() {
+    const images = ["allosaurus", "tyrannosaurus", "triceratops", "brachiosaurus", "stegosaurus",
+        "parasaurolophus"];
+    let randomImage = getRandomNumber(images);
+    return images[randomImage];
 }
 
 function reset(tile) {
@@ -146,7 +137,7 @@ function reset(tile) {
 }
 
 function removeStyles(tile) {
-    tile.classList.remove("blurBrush");
+    tile.classList.remove("smileyShape", "outlineShape", "circleShape", "dinosaurShape", "blurShape");
     tile.style.backgroundImage = "none";
 }
 
@@ -197,9 +188,12 @@ function setColorChoice(button) {
 squareButton.addEventListener("click", () => draw("square"));
 circleButton.addEventListener("click", () => draw("circle"));
 smileyButton.addEventListener("click", () => draw("smiley"));
-blurButton.addEventListener("click", () => drawBlur());
+blurButton.addEventListener("click", () => draw("blur"));
 squareOutlineButton.addEventListener("click", () => draw("squareOutline"));
 circleOutlineButton.addEventListener("click", () => draw("circleOutline"));
+dinosaurButton.addEventListener("click", () => {
+    draw("dinosaur");
+});
 eraseButton.addEventListener("click", () => erase());
 clearButton.addEventListener("click", () => {
     clearBoard();
