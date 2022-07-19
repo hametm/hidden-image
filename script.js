@@ -1,14 +1,14 @@
 const background = document.querySelector(".background");
 const backgroundContainer = document.querySelector(".background-container");
 
-const drawButton = document.querySelector(".draw");
-const eraseButton = document.querySelector(".erase");
-const circleButton = document.querySelector(".circle");
-const smileyButton = document.querySelector(".smiley");
-const squareOutlineButton = document.querySelector(".square-outline");
-const circleOutlineButton = document.querySelector(".circle-outline");
-const blurButton = document.querySelector(".blur");
-const clearButton = document.querySelector(".clear");
+const squareButton = document.getElementById("square");
+const eraseButton = document.getElementById("eraser");
+const circleButton = document.getElementById("circle");
+const smileyButton = document.getElementById("smiley");
+const squareOutlineButton = document.getElementById("square-outline");
+const circleOutlineButton = document.getElementById("circle-outline");
+const blurButton = document.getElementById("blur");
+const clearButton = document.getElementById("clear");
 const controlButtons = document.querySelectorAll(".controls");
 
 const greenButton = document.getElementById("green");
@@ -28,7 +28,7 @@ window.onresize = () => location.reload();
 
 // Set defaults
 let colorChoice = "green";
-drawButton.classList.add("selected");
+squareButton.classList.add("selected");
 greenButton.classList.add("selected"); 
 fillBoard();
 draw();
@@ -49,7 +49,7 @@ function draw(shape) {
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
-            removeBlur(tile);
+            removeStyles(tile);
             getShape(tile, shape);
             getColor(colorChoice, tile);
             getPosition(tile);
@@ -58,7 +58,7 @@ function draw(shape) {
 }
 
 function erase() {
-    backgroundContainer.style.setProperty("cursor", "url(./images/eraser.png), auto");
+    backgroundContainer.style.setProperty("cursor", "url(./images/eraser-cursor.png), auto");
     const tiles = document.querySelectorAll(".tile");
     tiles.forEach(tile => {
         tile.addEventListener("mouseover", () => {
@@ -119,7 +119,7 @@ function getShape(tile, shape) {
         case "smiley":
             tile.classList.remove("circleShape", "outlineShape");
             tile.classList.add("smileyShape");
-            tile.style.backgroundImage = ("url(./images/smile.png");
+            tile.style.backgroundImage = ("url(./images/smiley-face.png");
             break;
         case "squareOutline": {
             tile.classList.remove("circleShape", "smileyShape");
@@ -140,13 +140,14 @@ function getRandomNumber(array) {
 }
 
 function reset(tile) {
-    removeBlur(tile);
+    removeStyles(tile);
     tile.style.backgroundImage = "none";
     tile.style.backgroundColor = "white";
 }
 
-function removeBlur(tile) {
+function removeStyles(tile) {
     tile.classList.remove("blurBrush");
+    tile.style.backgroundImage = "none";
 }
 
 function clearBoard() {
@@ -180,6 +181,10 @@ function setButtonColor(button) {
     if (button !== rainbowButton) button.style.backgroundColor = button.id;
 }
 
+function setButtonIcon(button) {
+    button.style.backgroundImage = `url(./images/${button.id}.png)`;
+}
+
 function setColorChoice(button) {
     button.addEventListener("click", () => {
         colorChoice = button.id;
@@ -189,7 +194,7 @@ function setColorChoice(button) {
 // Event listeners
 
 // Controls
-drawButton.addEventListener("click", () => draw("square"));
+squareButton.addEventListener("click", () => draw("square"));
 circleButton.addEventListener("click", () => draw("circle"));
 smileyButton.addEventListener("click", () => draw("smiley"));
 blurButton.addEventListener("click", () => drawBlur());
@@ -201,6 +206,7 @@ clearButton.addEventListener("click", () => {
     fillBoard();
 });
 controlButtons.forEach(button => {
+    setButtonIcon(button);
     button.addEventListener("click", () => {
         setSelectedButton(controlButtons, button);
         if (button === clearButton) button.classList.remove("selected"); // So "clear" doesn't remain selected after clicking it

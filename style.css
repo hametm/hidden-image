@@ -124,22 +124,6 @@ button:active {
         0px -2px 8px;
 }
 
-.draw {
-    background-image: url(./images/brush-icon.png);
-}
-
-.erase {
-    background-image: url(./images/eraser-icon.png);
-}
-
-.clear {
-    background-image: url(./images/clear.png);
-}
-
-.blur {
-    background-image: url(./images/blur.png);
-}
-
 .colors {
     width: 9rem;
 }
@@ -171,21 +155,11 @@ button:active {
     rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
 }
 
-.circle {
-    background-image: url(./images/circle.png);
-}
-
-.smiley {
-    background-image: url(./images/smile-icon.png);
-}
-
-.square-outline {
-    background-image: url(./images/square-outline.png);
+#square-outline {
     background-size: 80%;
 }
 
-.circle-outline {
-    background-image: url(./images/circle-outline.png);
+#circle-outline {
     background-size: 70%;
 }
 
