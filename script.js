@@ -5,6 +5,8 @@ const drawButton = document.querySelector(".draw");
 const eraseButton = document.querySelector(".erase");
 const circleButton = document.querySelector(".circle");
 const smileyButton = document.querySelector(".smiley");
+const squareOutlineButton = document.querySelector(".square-outline");
+const circleOutlineButton = document.querySelector(".circle-outline");
 const blurButton = document.querySelector(".blur");
 const clearButton = document.querySelector(".clear");
 const controlButtons = document.querySelectorAll(".controls");
@@ -108,18 +110,27 @@ function getPosition(tile) {
 function getShape(tile, shape) {
     switch(shape) {
         case "circle":
-            tile.classList.remove("smileyShape");
+            tile.classList.remove("smileyShape", "outlineShape");
             tile.classList.add("circleShape");
             break;
         case "square":
-            tile.classList.remove("smileyShape");
-            tile.classList.remove("circleShape");
+            tile.classList.remove("smileyShape", "circleShape", "outlineShape");
             break;
         case "smiley":
-            tile.classList.remove("circleShape");
+            tile.classList.remove("circleShape", "outlineShape");
             tile.classList.add("smileyShape");
             tile.style.backgroundImage = ("url(./images/smile.png");
             break;
+        case "squareOutline": {
+            tile.classList.remove("circleShape", "smileyShape");
+            tile.classList.add("outlineShape");
+            break;
+        }
+        case "circleOutline": {
+            tile.classList.remove("smileyShape");
+            tile.classList.add("circleShape", "outlineShape");
+            break;
+        }
     }
 }
 
@@ -182,6 +193,8 @@ drawButton.addEventListener("click", () => draw("square"));
 circleButton.addEventListener("click", () => draw("circle"));
 smileyButton.addEventListener("click", () => draw("smiley"));
 blurButton.addEventListener("click", () => drawBlur());
+squareOutlineButton.addEventListener("click", () => draw("squareOutline"));
+circleOutlineButton.addEventListener("click", () => draw("circleOutline"));
 eraseButton.addEventListener("click", () => erase());
 clearButton.addEventListener("click", () => {
     clearBoard();
