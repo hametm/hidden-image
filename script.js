@@ -27,7 +27,7 @@ const colorButtons = document.querySelectorAll(".colors");
 // Refresh when the "canvas" is resized
 window.onresize = () => location.reload(); 
 
-// Allow for scrolling when the page is too small for all the
+// Allow for scrolling when the page is too small for all the sidebar icons
 setSidebarHeight();
 
 // Set defaults
