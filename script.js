@@ -9,12 +9,16 @@ const blurButton = document.querySelector(".blur");
 const clearButton = document.querySelector(".clear");
 const controlButtons = document.querySelectorAll(".controls");
 
-const rainbowButton = document.querySelector(".rainbow");
-const blackButton = document.querySelector(".black");
-const redButton = document.querySelector(".red");
-const yellowButton = document.querySelector(".yellow");
-const blueButton = document.querySelector(".blue");
-const greenButton = document.querySelector(".green");
+const greenButton = document.getElementById("green");
+const orangeButton = document.getElementById("orange");
+const yellowButton = document.getElementById("yellow");
+const redButton = document.getElementById("red");
+const blueButton = document.getElementById("blue");
+const purpleButton = document.getElementById("purple");
+const blackButton = document.getElementById("black");
+const greyButton = document.getElementById("grey");
+const pinkButton = document.getElementById("pink");
+const rainbowButton = document.getElementById("rainbow");
 const colorButtons = document.querySelectorAll(".colors");
 
 // Refresh when "canvas" is resized
@@ -161,6 +165,16 @@ function getColumnCount() {
     return gridColumnCount;
 }
 
+function setButtonColor(button) {
+    if (button !== rainbowButton) button.style.backgroundColor = button.id;
+}
+
+function setColorChoice(button) {
+    button.addEventListener("click", () => {
+        colorChoice = button.id;
+    });
+}
+
 // Event listeners
 
 // Controls
@@ -181,13 +195,9 @@ controlButtons.forEach(button => {
 });
 
 // Colors
-rainbowButton.addEventListener("click", () => colorChoice = "rainbow");
-blackButton.addEventListener("click", () => colorChoice = "black");
-redButton.addEventListener("click", () => colorChoice = "red");
-yellowButton.addEventListener("click", () => colorChoice = "yellow");
-blueButton.addEventListener("click", () => colorChoice = "blue");
-greenButton.addEventListener("click", () => colorChoice = "green");
 colorButtons.forEach(button => {
+    setButtonColor(button);
+    setColorChoice(button);
     button.addEventListener("click", () => {
         setSelectedButton(colorButtons, button);
     });
