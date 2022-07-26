@@ -118,6 +118,8 @@ function getShape(tile, shape) {
         case "blur":
             getBlurColor(tile);
             tile.classList.add("blurShape");
+        default:
+            tile.classList.add("squareShape");
     }
 }
 
@@ -135,7 +137,6 @@ function getRandomImage() {
 
 function reset(tile) {
     removeStyles(tile);
-    tile.style.boxShadow = "none";
     tile.style.backgroundImage = "none";
     tile.style.backgroundColor = "white";
 }
@@ -220,7 +221,6 @@ controlButtons.forEach(button => {
     button.addEventListener("click", () => {
         setSelectedButton(controlButtons, button);
         if (button === clearButton) button.classList.remove("selected");
-        if (button === dinosaurButton) setSelectedButton(colorButtons, button);
     });
 });
 
